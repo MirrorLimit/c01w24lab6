@@ -1,0 +1,23 @@
+# Use the official Node.js image as the base image for backend
+FROM node:20.0.0-alpine AS backend
+
+# Set the working directory for backend
+WORKDIR /quirknotes/backend
+
+# Copy backend package files
+COPY quirknotes/backend/package*.json ./
+
+# Copy backend files
+COPY quirknotes/backend ./
+
+# Install backend dependencies
+RUN npm install
+
+# Installing dependencies of the server
+RUN npm install express mongodb bcrypt jsonwebtoken
+
+# Installing nodemon in case it wasn't installed
+RUN npm install nodemon
+
+# Start server
+CMD ["npm", "run", "dev"]
